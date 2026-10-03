@@ -28,3 +28,28 @@ def listar_cursos(categoria: Optional[str] = None,
     if categoria:
         consulta = consulta.filter(models.Curso.categoria == categoria)
     return consulta.all()
+
+
+# UPDATE
+@router.put("/{curso_id}", response_model=schemas.CursoResponse)
+def atualizar_curso(curso_id: int, dados: schemas.CursoCreate,
+                    db: Session = Depends(get_db)):
+    curso = db.query(models.Curso).filter(models.Curso.id == curso_id).first()
+    if not curso:
+        raise HTTPException(status_code=404, detail="Curso não encontrado")
+    for campo, valor in dados.model_dump().items():
+        setattr(curso, campo, valor)
+    db.commit()
+    db.refresh(curso)
+    return curso
+
+
+# DELETE
+@router.delete("/{curso_id}")
+def deletar_curso(curso_id: int, db: Session = Depends(get_db)):
+    curso = db.query(models.Curso).filter(models.Curso.id == curso_id).first()
+    if not curso:
+        raise HTTPException(status_code=404, detail="Curso não encontrado")
+    db.delete(curso)
+    db.commit()
+    return {"mensagem": "Curso removido com sucesso"}
