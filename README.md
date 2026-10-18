@@ -52,3 +52,31 @@ API RESTful desenvolvida com FastAPI, Pydantic e SQLAlchemy, com persistência e
   "ativo": true
 }
 ```
+## Regras de validação
+
+Os dados de entrada são validados pelos schemas Pydantic (`schemas.py`).
+
+| Campo | Regra |
+|---|---|
+| titulo | 3 a 100 caracteres, não pode ser vazio |
+| categoria | 3 a 50 caracteres, não pode ser vazio |
+| carga_horaria | número maior que zero |
+| preco | número maior que zero |
+| email_instrutor | e-mail válido (nome@dominio.com) |
+| telefone | exatamente 11 dígitos (DDD + número), somente números |
+
+## Mensagens de erro
+
+Quando uma validação falha, a API responde **422** com mensagens amigáveis em JSON:
+
+```json
+{
+  "detail": "Dados inválidos. Corrija os campos abaixo.",
+  "erros": [
+    {
+      "campo": "telefone",
+      "mensagem": "O telefone deve conter 11 dígitos com o DDD, apenas números."
+    }
+  ]
+}
+```
