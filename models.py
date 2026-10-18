@@ -11,3 +11,5 @@ class Curso(Base):
     carga_horaria = Column(Integer, nullable=False)
     preco = Column(Float, nullable=False)
     ativo = Column(Boolean, default=True)
+    email_instrutor = Column(String, nullable=False)
+    telefone = Column(String, nullable=False)
