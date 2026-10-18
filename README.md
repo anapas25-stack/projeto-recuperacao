@@ -28,10 +28,12 @@ API RESTful desenvolvida com FastAPI, Pydantic e SQLAlchemy, com persistência e
 |---|---|---|
 | id | inteiro | gerado automaticamente |
 | titulo | texto | obrigatório, de 3 a 100 caracteres |
-| categoria | texto | obrigatório, de 2 a 50 caracteres |
+| categoria | texto | obrigatório, de 3 a 50 caracteres |
 | carga_horaria | inteiro | obrigatório, maior que 0 |
-| preco | decimal | obrigatório, maior ou igual a 0 |
+| preco | decimal | obrigatório, maior que 0 |
 | ativo | booleano | padrão: true |
+| email_instrutor | texto | obrigatório, e-mail válido |
+| telefone | texto | obrigatório, 11 dígitos (DDD + número) |
 
 ## Rotas
 | Método | Rota | Descrição | Sucesso | Erros |
@@ -45,11 +47,13 @@ API RESTful desenvolvida com FastAPI, Pydantic e SQLAlchemy, com persistência e
 ## Exemplo de corpo (POST e PUT)
 ```json
 {
-  "titulo": "Python para Iniciantes",
+  "titulo": "Python do Zero",
   "categoria": "Programação",
   "carga_horaria": 40,
-  "preco": 199.9,
-  "ativo": true
+  "preco": 199.90,
+  "ativo": true,
+  "email_instrutor": "maria@email.com",
+  "telefone": "11999998888"
 }
 ```
 ## Regras de validação
